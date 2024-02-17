@@ -1,12 +1,25 @@
-import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { NgModule, Optional, SkipSelf, isDevMode } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { EffectsModule } from '@ngrx/effects';
+import { appReducer } from './store/app.state';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { CustomSerializer } from './store/router/custom-serializer';
 
+ 
 @NgModule({
   imports: [
     AppRoutingModule,
+    EffectsModule.forRoot([]),
+    StoreModule.forRoot(appReducer),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    StoreRouterConnectingModule.forRoot({
+      serializer: CustomSerializer,
+    }),
   ],
   declarations: [
     HeaderComponent,
@@ -16,7 +29,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
   exports: [
     HeaderComponent,
     FooterComponent,
-    AppRoutingModule
+    AppRoutingModule,
   ]
 })
 export class CoreModule {
