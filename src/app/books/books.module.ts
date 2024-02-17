@@ -3,15 +3,16 @@ import { CommonModule } from '@angular/common';
 
 import { BooksRoutingModule } from './books-routing.module';
 import { BooksComponent } from './books.component';
-
+import { StoreModule } from '@ngrx/store';
+import { postsReducer } from './state/books.reducer';
+import { BOOKS_STATE_NAME } from './state/books.selectors';
 
 @NgModule({
-  declarations: [
-    BooksComponent
-  ],
+  declarations: [BooksComponent],
   imports: [
     CommonModule,
-    BooksRoutingModule
-  ]
+    BooksRoutingModule,
+    StoreModule.forFeature(BOOKS_STATE_NAME, postsReducer),
+  ],
 })
-export class BooksModule { }
+export class BooksModule {}
