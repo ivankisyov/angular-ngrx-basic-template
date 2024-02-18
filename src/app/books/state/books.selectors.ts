@@ -1,11 +1,10 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { RouterState } from '@angular/router';
-import { BooksState } from './books.state';
+import { createSelector } from '@ngrx/store';
 
-export const BOOKS_STATE_NAME = 'books';
+import * as fromBooks from './books.reducers';
 
-const getBooksState = createFeatureSelector<BooksState>(BOOKS_STATE_NAME);
-
-export const getBooks = createSelector(getBooksState, (state) => {
-  return state.books;
-});
+export const getBooks = createSelector(
+  fromBooks.booksFeature.selectBooksState,
+  (state) => {
+    return state.books;
+  }
+);

@@ -4,39 +4,31 @@ import { FooterComponent } from './footer/footer.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { EffectsModule } from '@ngrx/effects';
-import { appReducer } from './store/app.state';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
-import { CustomSerializer } from './store/router/custom-serializer';
+import { CustomSerializer } from '../store/router/custom-serializer';
+import { reducers } from '../store';
 
- 
 @NgModule({
   imports: [
     AppRoutingModule,
     EffectsModule.forRoot([]),
-    StoreModule.forRoot(appReducer),
+    StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     StoreRouterConnectingModule.forRoot({
       serializer: CustomSerializer,
     }),
   ],
-  declarations: [
-    HeaderComponent,
-    FooterComponent,
-    PageNotFoundComponent
-  ],
-  exports: [
-    HeaderComponent,
-    FooterComponent,
-    AppRoutingModule,
-  ]
+  declarations: [HeaderComponent, FooterComponent, PageNotFoundComponent],
+  exports: [HeaderComponent, FooterComponent, AppRoutingModule],
 })
 export class CoreModule {
-  constructor (@Optional() @SkipSelf() parentModule: CoreModule) {
+  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
     if (parentModule) {
       throw new Error(
-        'CoreModule is already loaded. Import it in the AppModule only');
+        'CoreModule is already loaded. Import it in the AppModule only'
+      );
     }
   }
 }
